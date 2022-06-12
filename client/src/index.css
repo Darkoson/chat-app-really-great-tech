@@ -1,8 +1,85 @@
 :root{
+  --white:#FFFFFF;
+  --gray:#707070;
+  --green:#228C22;
   --blue-deep:#2699FB;
   --blue-light:#BCE0FD;
   --blue-white:#F1F9FF;
+  --form-bg:#E4E4E4;
+
+  --white-rgb: 255, 255, 255;
+  --gray: 112, 112, 112;
+  --blue-deep-rgb: 38, 153, 251;
+  --blue-light-rgb:188, 224, 253;
+  --blue-white-rgb:241, 249, 255;
+  --form-bg-rgb:228, 228, 228;
+
+  --max-mobile: 400px;
+  --max-tablet: 768px;
+  --max-desktop-sm: 992px;
+  --max-deskop-lg: 1200px; 
+  --max-deskop-xl: 1400px; 
+}
+
+body{
+  margin: 0px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.title{
+  font-family: "Arial Black", Helvetica, sans-serif;
 }
 
 
+/* Login & Register components */
+.Login, .Register {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
 
+.Login .title {
+  margin-bottom: 25px;
+}
+
+#btn-login {
+  width: 100%;
+  background-color: var(--blue-deep);
+  border-radius: 3px;
+  padding: 5px;
+  border: none;
+  margin: 10px auto 30px auto;
+}
+
+.form-group{
+  margin-top: 5px;
+}
+
+input{
+  border-radius: 3px;
+  height: 20px;
+  border: 0.2px var(--blue-light);
+}
+input:focus{
+  outline-color:var(--blue-light) ;
+}
+a{
+  text-decoration: none;
+}
+button{
+cursor: pointer;
+}
+
+.text-small{
+  font-size: 12px;
+}
+.text-bold{
+  font-weight: bold;
+}
+.full {
+  width: 100%;
+}
+.text-white{ color: var(--white);}
+.text-blue-deep{ color: var(--blue-deep);}
+.text-blue-light{ color: var(--blue-light);}
+.text-blue-white{ color: var(--blue-white);}

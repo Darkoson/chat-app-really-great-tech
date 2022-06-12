@@ -1,0 +1,17 @@
+.Login{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.Login .title{
+    margin-bottom: 25px;
+}
+#btn-login{
+    width: 100%;
+    background-color: var(--blue-deep);
+    border-radius: 3px;
+    padding: 5px;
+    border: none;
+    margin: 10px auto 30px auto;
+}
