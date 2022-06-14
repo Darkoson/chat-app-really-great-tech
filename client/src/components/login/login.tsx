@@ -1,17 +1,30 @@
-import React, { FC, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { FC } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import useForm from "../../hooks/useForm";
 import "./login.css";
+import {
+  EyeInvisibleOutlined,
+  EyeTwoTone,
+  LockOutlined,
+} from "@ant-design/icons";
+import { Input } from "antd";
+
+const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  console.log(`target: ${e.target.name}`);
+};
 
 const Login: FC = () => {
-  const callback = () => {
-    console.log(`Email: ${inputs.email} ; password: ${inputs.password}`);
-  };
-  const { inputs, handleInputChange } = useForm(callback);
 
-  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const { inputs, handleInputChange } = useForm(onChange);
+  const navigate = useNavigate()
+
+  const handleSubmit = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     event.preventDefault();
-    console.log(inputs);
+
+    // redirection to the chat page
+    navigate("/chat")
   };
 
   return (
@@ -33,17 +46,24 @@ const Login: FC = () => {
         </div>
 
         <div className="form-group">
-          <input
+          <Input.Password
+            type="password"
+            name="password"
+            placeholder="****"
+            onChange={handleInputChange}
+            prefix={<LockOutlined />}
+            iconRender={(visible) =>
+              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+            }
+          />
+          {/* <input
             type="password"
             className="full"
             name="password"
+            onChange={handleInputChange}
             id=""
             placeholder="****"
-            onChange={handleInputChange}
-          />
-          <span>
-            <img src="" alt="" />
-          </span>
+          /> */}
         </div>
 
         <div className="form-group">
@@ -51,8 +71,7 @@ const Login: FC = () => {
             id="btn-login"
             className="text-bold text-white"
             onClick={handleSubmit}
-            disabled={inputs.password ===''}
-          >
+            disabled={inputs.password === ""}>
             Connect
           </button>
         </div>

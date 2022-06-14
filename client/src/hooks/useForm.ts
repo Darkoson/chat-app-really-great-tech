@@ -1,15 +1,9 @@
 import { useState } from "react";
 
-const useForm = (changeCallback: any = () => {}) => {
+const useForm = (
+  changeCallback: (event: React.ChangeEvent<HTMLInputElement>) => any = () => {}
+) => {
   const [inputs, setInputs] = useState<{ [key: string]: any }>({});
-
-  const handleSubmit = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    if (event) {
-      event.preventDefault();
-    }
-  };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.persist();
@@ -21,7 +15,6 @@ const useForm = (changeCallback: any = () => {}) => {
   };
 
   return {
-    handleSubmit,
     handleInputChange,
     inputs,
   };

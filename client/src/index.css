@@ -1,14 +1,15 @@
 :root{
   --white:#FFFFFF;
   --gray:#707070;
-  --green:#228C22;
+  --green:#228c22;
   --blue-deep:#2699FB;
   --blue-light:#BCE0FD;
   --blue-white:#F1F9FF;
   --form-bg:#E4E4E4;
 
   --white-rgb: 255, 255, 255;
-  --gray: 112, 112, 112;
+  --gray-rgb: 112, 112, 112;
+  --green-rgb: 34, 140, 34;
   --blue-deep-rgb: 38, 153, 251;
   --blue-light-rgb:188, 224, 253;
   --blue-white-rgb:241, 249, 255;
@@ -71,7 +72,7 @@ cursor: pointer;
 }
 
 .text-small{
-  font-size: 12px;
+  font-size: 11px;
 }
 .text-bold{
   font-weight: bold;
