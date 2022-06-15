@@ -1,0 +1,23 @@
+.user-header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.user-info{
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+}
+
+.user-email {
+    color: rgba(255, 255, 255, 0.89);
+}
+.user-img {
+    margin: 0px 10px;
+}
+ 
+
+.user-options{
+    width: 30px;
+}

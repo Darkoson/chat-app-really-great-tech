@@ -1,192 +1,82 @@
-.Chat{
+/* CHAT LAYOUT */
+
+.chat {
+    margin: 0px 20px;
+    display: grid;
+    grid-template-columns: 350px 1fr;
     height: 100vh;
-    background: rgba(var(--blue-light-rgb), 0.5);
-}
-
-.Chat .wrapper{
-    display: flex;
-    height: 98%;
-    padding: 0px 10px;
-}
-
-/* messages column */
-
-.contacts-area {
-    display: flex;
-    border-radius: 20px;
-    flex-direction: column;
-    width: 300px;
-    border: 0.5px solid rgb(var(--blue-light-rgb));
-    
-}
-.contacts-area .contacts-header{
-    display: flex;
-    flex-direction: row;
-    border-radius: 8px 0px 0px 0px;
-    padding-left: 10px;
-    height: 2.8rem;
-    align-items: center;
 
 }
 
-/* user profile start */
-.user-profile{
-    display: flex;
-    flex-grow: 1;
-}
-.picture{
-    background-color:rgba(var(--white-rgb), 0.5) ;
-    height: 2rem;
-    width: 2rem;
-    border-radius: 50%;
-}
-.user{
-    display: flex;
-    flex-direction: column;
-    margin-left: 5px;
-}
-.user-actions{
-    padding: 5px;
-}
-/* user profile end */
-
-
-
-
-
-.contacts-area .contacts-body{
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
-    background: rgba(var(--green-rgb), 0.5);
-    border-radius: 0px 0px 0px 8px;
-    /* padding: 5px 0px 0px 10px; */
+.chat>div {
+    border: .5px solid var(--borderColor);
 }
 
-/* contact list  start*/
-#search-input{
-    width: 90%!important;
-    padding-left: 10px;
-    border-radius: 20px;
-    margin-bottom: 10px;
-}
-
-.contacts-list{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    background-color: brown;
-    padding: 3px 0px ;
-    overflow: scroll;
-    overflow-x: hidden;
-    height: 300px;
-}
-
-.contact-wrapper{
-    display: flex;
-    flex-direction: row;
-    border: 0.5px solid seagreen;
-    height: 40px;
-    align-items: center;
-    width: 96%;
-    padding:4px 2%;
-}
-
-.contact-wrapper:hover{
-    cursor: pointer;
-    background-color: rgba(var(--form-bg-rgb), 0.5);
-}
-.contact{
-    display: flex;
-    flex-grow: 1;
-    flex-direction: row;
-    border: .5px solid tomato;
-    /* height: fit-content; */
-    /* width: 100%; */
-}
-
-.contact-picture {
-    background-color: rgba(var(--white-rgb), 0.5);
-    height: 2rem;
-    width: 2rem;
+.chat img {
     border-radius: 50%;
 }
 
-.contact-details {
-    display: flex;
-    flex-direction: column;
-    margin-left: 5px;
-}
-.contact-name{
-    font-size: 14px;
-}
-.contact-excerpt{
-    font-size: 12px;
-}
-
-.contact-notification{
-    width: 25px;
-}
-
-/* contact list  start*/
-
-
-
-
-
-/* messages column */
-
-.messages-area {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    border: 0.5px solid rgb(var(--blue-light-rgb));
-}
-.messages-area .messages-header{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    border-radius: 0px 8px 0px 0px;
-    padding-left: 10px;
-    height: 2.8rem;
-}
-.messages-area .message-recipient-name{
-    text-align: center;
-    flex-grow: 1;
-}
-.messages-area .message-recipient-options{
-    width: 50px;
-}
-.messages-area .messages-body{
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
-    padding: 0px 4% 5px 4%;
-    background: rgba(var(--gray-rgb), 0.5);
-     padding-left: 10px;
-}
-.messages-area .messages{
-    flex-grow: 1;
-    padding: 3px 60px;
-    background: rgba(var(--green-rgb), 0.5);
-}
-.messages-area .messages-input{
-    background: rgba(var(--white-rgb), 0.5);
-    align-items: center;
-}
-#newInput{
-    padding: 3px;
-}
-#newInput:focus{
-    height: 60px;
-}
-/* other generic classes */
 .header {
-    background-color: rgba(var(--blue-deep-rgb));
-    color: rgb(var(--white-rgb));
+    background-color: var(--blue);
+    width: 100%;
+    height: 60px;
+    margin: auto;
 }
- 
 
 
+/* SIDEBAR */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+}
 
+.sidebar,
+.sidebar-header {
+    border-radius: 10px 0px 0 0px;
+}
+
+.sidebar-body,
+.recipient-messages {
+    flex-grow: 1;
+}
+
+.recipient {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.recipient,
+.recipient-header {
+    border-radius: 0px 10px 0 0px;
+}
+
+.message-header {
+    display: flex;
+}
+
+.active-chat-username {
+    color: #fff;
+    flex-grow: 1;
+    padding-left: 5%;
+}
+
+.active-chat-options {
+    margin-right: 5%;
+}
+
+
+/*  MEDIA QUERIES */
+
+@media screen and (max-width: 768px) {
+    .chat {
+        grid-template-columns: 1fr;
+    }
+
+    .recipient,
+    .recipient-header,
+    .sidebar,
+    .sidebar-header {
+        border-radius: 10px 10px 0 0px;
+    }
+}

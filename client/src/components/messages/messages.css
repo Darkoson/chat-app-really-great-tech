@@ -1,0 +1,79 @@
+.messages{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+
+
+/* message content */
+.message-content{
+    flex-grow: 1;
+    overflow-y: scroll;
+}
+.chat-history{
+    width: 90%;
+    padding-top: 1rem;
+    margin: auto;
+}
+.chat-history .you {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 3rem;
+}
+
+.chat-history p strong {
+    display: inline-block;
+    padding: .4rem .8rem;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.chat-history .you strong {
+    background-color: var(--lightBlue);
+}
+
+.chat-history .other strong {
+    background-color: #fff;
+    box-shadow: 1px 1px 3px var(--borderColor);
+}
+
+
+
+
+
+/* input section  */
+
+.message-input{
+    flex-direction: row;
+    min-height: 50px;
+    background-color: black;
+    align-items: center;
+}
+.message-input>div{ 
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    margin: auto;
+    align-items: center;
+    justify-content: space-between;
+}
+.message-input input{
+   margin-right: 20px;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    border-radius: 5px;
+}
+.message-input input:focus{
+   height: 60px;
+}
+.message-input button{
+   width: 60px;
+    padding: .2rem .5rem;
+    background-color: var(--lightBlue);
+    border-radius: 8px;
+    transition: border-color .5s;
+}
+
+
+
