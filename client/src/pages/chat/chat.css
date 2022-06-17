@@ -46,8 +46,7 @@
     flex-direction: column;
 }
 
-.recipient,
-.recipient-header {
+.recipient  {
     border-radius: 0px 10px 0 0px;
 }
 

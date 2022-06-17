@@ -5,15 +5,13 @@ import Register from "./components/register/register";
 import useWindow from "./hooks/useWindow";
 import Chat from "./pages/chat/chat";
 import Welcome from "./pages/welcome/welcome";
+import { Device } from "./store/actions/device-actions";
 
 function App() {
-  const { width } = useWindow();
-  if (width <= 768) {
-    // do something
-    console.log("mobile mode, from App component !");
-  } else {
-    console.log("desktop mode, from App component !");
-  }
+  const { device } = useWindow();
+
+  console.log(device);
+  
 
   return (
     <div>
@@ -25,6 +23,7 @@ function App() {
             <Route path="signup" element={<Register />} />
           </Route>
           <Route path="chat" element={<Chat />} />
+          {(device !== Device.Desktop) }
         </Routes>
       </BrowserRouter>
     </div>

@@ -7,6 +7,11 @@
 
 
 /* message content */
+.message-header{
+    display: flex;
+    border-radius: 0px 10px 0 0px;
+    align-items: center;
+}
 .message-content{
     flex-grow: 1;
     overflow-y: scroll;

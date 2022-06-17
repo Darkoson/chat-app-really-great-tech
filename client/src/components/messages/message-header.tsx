@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 
 const MessageHeader: FC = () => {
   return (
-    <div className="message-header">
+   
+    <div className="header message-header">
       <h3 className="active-chat-username">Pamela Arhin</h3>
       <div className="drop-down active-chat-options">
         <Popover
