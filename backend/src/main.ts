@@ -9,6 +9,7 @@ import { listenIOSocket } from "./servers/io-server";
 const main = async () => {
   //getting the configured Express application
   const app = getExpressApp();
+
   const httpServer = http.createServer(app);
 
   //starting the graphQl server
@@ -17,9 +18,9 @@ const main = async () => {
   // connection to the database
   createConnection()
     .then(() => console.log("Database successfully connected !"))
-    .catch((err) =>
-      console.log("Fail to connect to the database !", err.message)
-    );
+    .catch((err) => {
+      console.log("Fail to connect to the database !", err.message);
+    });
 
   //listening to the Sockets
   listenIOSocket(httpServer);
@@ -30,9 +31,4 @@ const main = async () => {
     );
   });
 };
-try {
-  main();
-} catch (error) {
-  console.log("Main error-------", error);
-} finally {
-}
+main();

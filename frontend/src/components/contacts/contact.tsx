@@ -1,8 +1,21 @@
 import React, { FC } from "react";
+import { useSelector } from "react-redux";
+import { User } from "../../interfaces";
+import { selectActiveContactId, updateSelectedContactId } from "../../store/reducers/contacts-reducer";
 
-const Contact: FC = () => {
+interface ContactProps{
+  person:User
+}
+
+const Contact: FC<ContactProps> = ({ person }) => {
+  
+  const activeId = useSelector(selectActiveContactId);
+  
+  
   return (
-    <div className="contact">
+    <div
+      className={"contact " + (person.id === activeId ? "selected" : "")}
+      onClick={() => updateSelectedContactId(person.id)}>
       <div className="chat-user">
         <img
           src="./asset/JonathanKwofie-img.jpg"
@@ -11,7 +24,9 @@ const Contact: FC = () => {
           height="40px"
         />
         <div className="chat-profile">
-          <h3 className="chat-name">Jonathan Kwofie</h3>
+          <h3 className="chat-name">
+            {person.firstname + " " + person.lastname}
+          </h3>
           <small>The last time I saw you was ...</small>
         </div>
       </div>

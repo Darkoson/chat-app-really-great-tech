@@ -1,5 +1,5 @@
 import { gql, useMutation } from "@apollo/client";
-import { User, UserInfoResult } from "../../interfaces";
+import {  GQLResult, LoginInput } from "../../interfaces";
 
 export const LOGIN_MUTATION = gql`
   mutation Login($input: LoginInput!) {
@@ -24,7 +24,7 @@ export const LOGIN_MUTATION = gql`
 const useLogin = () => {
   const [login] = useMutation(LOGIN_MUTATION);
 
-  const executeLogin = async (input: User): Promise<UserInfoResult | null> => {
+  const executeLogin = async (input: LoginInput): Promise<GQLResult | null> => {
     let result = await login({
       variables: { input },
     });

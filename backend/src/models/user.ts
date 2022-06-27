@@ -1,7 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  ManyToMany,
+  JoinTable,
+} from "typeorm";
 import { Length } from "class-validator";
 
-@Entity({ name: "Users" })
+@Entity({ name: "users" })
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn({ name: "id", type: "bigint" })
   id: string;
@@ -31,4 +38,21 @@ export class User extends BaseEntity {
 
   @Column("boolean", { name: "confirmed", default: true, nullable: false })
   confirmed: boolean;
+
+  @ManyToMany(() => User, (blocker: User) => blocker.victims)
+  @JoinTable({
+    name: "black_list",
+    joinColumn: { 
+      name: "victim_id",
+      referencedColumnName: "id",
+    },
+    inverseJoinColumn: {
+      name: "blocker_id",
+      referencedColumnName: "id",
+    },
+  })
+  blockers: User[];
+
+  @ManyToMany(() => User, (victim: User) => victim.blockers)
+  victims: User[];
 }

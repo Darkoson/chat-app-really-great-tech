@@ -19,17 +19,19 @@ export const getUser = async (id: any): Promise<User | IInfo> => {
 };
 
 export const getUserContacts = async (id: any): Promise<IUsers | IInfo> => {
-  let users = await User.createQueryBuilder("Users")
-    .where("Users.id != :id", { id })
+  let users = await User.createQueryBuilder("User")
+    .where("User.id != :id", { id })
     .getMany();
   return { users };
 };
 
 export const getUserVisibleContacts = async (
   id: any
-): Promise<User | IInfo> => {
-  let user = await User.findOneBy({ id });
-  return user ? user : { messages: ["user does not exist !"] };
+): Promise<IUsers | IInfo> => {
+  let users = await User.createQueryBuilder("Users")
+    .where("Users.id != :id", { id })
+    .getMany();
+  return { users };
 };
 
 export const login = async (

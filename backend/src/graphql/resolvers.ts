@@ -44,6 +44,9 @@ export const resolvers = {
       try {
         gqlResult.ok = true;
         gqlResult.res = await userService.getUserContacts(args.id);
+        console.log("args=", args);
+        console.log("res=", gqlResult.res);
+
         return gqlResult;
       } catch (ex) {
         throw ex;

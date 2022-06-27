@@ -5,13 +5,12 @@ import Register from "./components/register/register";
 import useWindow from "./hooks/useWindow";
 import Chat from "./pages/chat/chat";
 import Welcome from "./pages/welcome/welcome";
-import { Device } from "./store/actions/device-actions";
+// import { Device } from "./store/actions/device-actions";
 
 function App() {
   const { device } = useWindow();
 
   console.log(device);
-  
 
   return (
     <div>
@@ -19,11 +18,11 @@ function App() {
         <Routes>
           <Route element={<Welcome />}>
             <Route index element={<Login />} />
-            <Route path="signin" element={<Login />} />
-            <Route path="signup" element={<Register />} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
           </Route>
           <Route path="chat" element={<Chat />} />
-          {(device !== Device.Desktop) }
+          {/* {device !== Device.Desktop} */}
         </Routes>
       </BrowserRouter>
     </div>

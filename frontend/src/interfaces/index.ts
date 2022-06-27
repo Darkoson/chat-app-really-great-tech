@@ -1,16 +1,29 @@
-export interface User{
-    email?: string;
-    password?: string;
-    firstname?: string;
-    lastname?:string
+export interface RegistrationInput {
+  email: string;
+  password?: string;
+  firstname: string;
+  lastname: string;
 }
-export interface Info{
-    messages: string[]
+export interface LoginInput {
+  email: string;
+  password: string;
 }
-export type UserInfo = User | Info;
 
-export interface UserInfoResult {
+export interface User extends RegistrationInput {
+  id: number; 
+  online?: boolean
+}
+
+export interface Users {
+  users: User[];
+}
+export interface Info {
+  messages: string[];
+}
+export type Data = User | Users | Info;
+
+export interface GQLResult {
   ok: true;
-  res: UserInfo;
+  res: Data;
 }
 

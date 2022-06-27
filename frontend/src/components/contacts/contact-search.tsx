@@ -1,6 +1,10 @@
 import React, { FC } from "react";
 
-const ContactSearch: FC = () => {
+interface SearchProps {
+  handleChange: (event: React.ChangeEvent<HTMLInputElement>)=>void
+}
+
+const ContactSearch: FC<SearchProps> = ({handleChange}) => {
   return (
     <div className="contact-search">
       <div className="container">
@@ -18,6 +22,7 @@ const ContactSearch: FC = () => {
           id=""
           placeholder="search for a contact"
           className="search-input"
+          onChange={handleChange}
         />
       </div>
     </div>

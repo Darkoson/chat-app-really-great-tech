@@ -4,16 +4,18 @@ import useLogin from "../../graphql/queries/use-login";
 import useForm from "../../hooks/useForm";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
+import { setCurrentUser } from "../../store/reducers/user-reducer";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/config";
 
 const Login: FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const { executeLogin } = useLogin();
 
   const { inputs, handleInputChange } = useForm();
   const navigate = useNavigate();
 
   const handleValidation = () => {
-    console.log("before validation: input=", inputs);
-
     let result = true;
     const { email, password } = inputs;
     if (!email) {
@@ -35,7 +37,10 @@ const Login: FC = () => {
         password: inputs.password,
       })
         .then((result) => {
-          if (result?.ok) {
+          if (result?.ok && "id" in result.res) {
+            console.log("before dispatch: currentUser=", result.res);
+
+            dispatch(setCurrentUser(result.res));
             localStorage.setItem("user", JSON.stringify(result.res));
             // redirection to the chat page
             navigate("/chat");

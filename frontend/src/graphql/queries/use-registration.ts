@@ -1,5 +1,5 @@
 import { gql, useMutation } from "@apollo/client";
-import { User, UserInfoResult } from "../../interfaces";
+import { GQLResult, RegistrationInput } from "../../interfaces";
 
 export const REGISTER_MUTATION = gql`
   mutation Register($input: RegisterInput!) {
@@ -25,8 +25,8 @@ const useRegistration = () => {
   const [register] = useMutation(REGISTER_MUTATION);
 
   const executeRegistration = async (
-    input: User
-  ): Promise<UserInfoResult | null> => {
+    input: RegistrationInput
+  ): Promise<GQLResult | null> => {
     let result = await register({
       variables: { input },
     });

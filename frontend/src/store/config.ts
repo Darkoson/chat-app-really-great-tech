@@ -1,16 +1,21 @@
-import { combineReducers, createStore } from "redux";
-import { UserReducer } from "./reducers/user-reducer";
-import { DeviceReducer } from "./reducers/device-reducer";
+import { configureStore } from "@reduxjs/toolkit";
+import contactsReducer from "./reducers/contacts-reducer";
+import userReducer from "./reducers/user-reducer";
 
-export const rootReducer = combineReducers({
-    user: UserReducer,
-    device: DeviceReducer
+export const store = configureStore({
+  reducer: {
+    user: userReducer,
+    contacts: contactsReducer,
+  },
 });
 
-export type AppState = ReturnType<typeof rootReducer>;
+export type AppState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
-const configureStore = () => {
-  return createStore(rootReducer);
-};
+//export type AppState = ReturnType<typeof rootReducer>;
 
-export default configureStore;
+// const configureStore = () => {
+//   return createStore(rootReducer);
+// };
+
+//export default configureStore;
