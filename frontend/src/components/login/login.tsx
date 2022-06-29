@@ -1,16 +1,16 @@
 import React, { FC } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import useLogin from "../../graphql/queries/use-login";
-import useForm from "../../hooks/useForm";
+import {useRemoteLogin} from "../../graphql/user/use-remote-login";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
-import { setCurrentUser } from "../../store/reducers/user-reducer";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store/config";
+import useForm from "../../shared/hooks/useForm";
+import { AppDispatch } from "../../shared/store/config";
+import { setCurrentUser } from "../../shared/store/slices/user-slice";
 
 const Login: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { executeLogin } = useLogin();
+  const { executeLogin } = useRemoteLogin();
 
   const { inputs, handleInputChange } = useForm();
   const navigate = useNavigate();

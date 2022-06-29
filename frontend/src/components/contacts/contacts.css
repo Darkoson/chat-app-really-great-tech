@@ -46,8 +46,8 @@
     background-color: var(--lightBlue);
 }
 
-.active-chat {
-    background-color: var(--lightBlue);
+.active-contact {
+    background-color: var(--lightBlue)
 }
 
 .chat-user {

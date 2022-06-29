@@ -9,7 +9,14 @@ import { User } from "../models/user";
 
 import { isEmailValid } from "../shared/validators/email-validator";
 import { isPasswordValid } from "../shared/validators/password-validator";
-import { IInfo, ILogin, IRegister, IUsers } from "../graphql/interfaces";
+import {
+  IBlockContact,
+  IInfo,
+  ILogin,
+  ILoginData,
+  IRegister,
+  IUsers,
+} from "../graphql/interfaces";
 
 const saltRounds = 10;
 
@@ -18,10 +25,11 @@ export const getUser = async (id: any): Promise<User | IInfo> => {
   return user ? user : { messages: ["user does not exist !"] };
 };
 
-export const getUserContacts = async (id: any): Promise<IUsers | IInfo> => {
+export const getUserContacts = async (id: any): Promise<IUsers> => {
   let users = await User.createQueryBuilder("User")
     .where("User.id != :id", { id })
     .getMany();
+  users.forEach((u) => (u.password = ""));
   return { users };
 };
 
@@ -37,7 +45,7 @@ export const getUserVisibleContacts = async (
 export const login = async (
   { email, password }: ILogin,
   req: Request
-): Promise<User | IInfo> => {
+): Promise<ILoginData | IInfo> => {
   console.log("user id is : ", req.session.userId);
   console.log("session id is : ", req.session.id);
 
@@ -67,7 +75,12 @@ export const login = async (
       console.log("user id exist already, it's:", user.id);
     }
 
-    return user;
+    user.password = "";
+    return {
+      currentUser: user,
+      contacts: (await getUserContacts(user.id)).users,
+      blockedIds: await getBlockedIds(user.id),
+    };
   } catch (error) {
     console.log("server error: ", error);
 
@@ -127,4 +140,59 @@ export const register = async (
       ],
     };
   }
+};
+
+export const handleBlocking = async (
+  input: IBlockContact,
+  req: Request
+): Promise<string[] | IInfo> => {
+  try {
+    //checking if the email does not exist already
+    let repo = User.getRepository();
+
+    let blocker = await repo.findOne({
+      where: { id: input.blockerId },
+      relations: ["victims"],
+    });
+    if (!blocker) {
+      return { messages: ["The blocker does not exist !"] };
+    }
+
+    let victim = await repo.findOne({
+      where: { id: input.victimId },
+      relations: ["blockers"],
+    });
+    if (!victim) {
+      return { messages: ["The victim does not exist !"] };
+    }
+
+    if (input.block) {
+      blocker.victims = [...blocker.victims, victim];
+    } else {
+      blocker.victims = blocker.victims.filter(
+        (contact) => contact.id !== victim?.id
+      );
+    }
+
+    blocker.save();
+
+    return blocker.victims.map((contact) => contact.id);
+  } catch (err) {
+    console.log(err);
+    return {
+      messages: [err.message],
+    };
+  }
+};
+
+export const getBlockedIds = async (userId: string): Promise<string[]> => {
+  let ids: string[] = [];
+  let blocker = await User.getRepository().findOne({
+    where: { id: userId },
+    relations: ["victims"],
+  });
+  if (blocker) {
+    ids = blocker.victims.map((contact) => contact.id);
+  }
+  return ids;
 };

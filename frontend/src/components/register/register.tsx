@@ -1,18 +1,17 @@
 import React, { FC } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import useSignup from "../../graphql/queries/use-registration";
-import useForm from "../../hooks/useForm";
+import { useRemoteRegistration } from "../../graphql/user/use-remote-registration";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
+import useForm from "../../shared/hooks/useForm";
 
 const Register: FC = () => {
-  const { executeRegistration } = useSignup();
+  const { executeRegistration } = useRemoteRegistration();
 
   const { inputs, handleInputChange } = useForm();
   const navigate = useNavigate();
 
   const handleValidation = () => {
-
     let result = true;
     const { email, password, confirm, firstname, lastname } = inputs;
     if (!email) {
@@ -23,7 +22,7 @@ const Register: FC = () => {
       result = false;
     } else if (password !== confirm) {
       toast.error(" The password and the confirm password should be the same!");
-      result = false
+      result = false;
     } else if (!firstname || firstname.length < 3) {
       toast.error(" The first name should be at least 3 characters");
       result = false;
@@ -46,11 +45,11 @@ const Register: FC = () => {
         lastname: inputs.lastname,
       })
         .then((result) => {
-          if (result?.ok) {
+          if (result.ok) {
             localStorage.setItem("user", JSON.stringify(result.res));
             // redirection to the chat page
             navigate("/chat");
-          } else if (result && "messages" in result.res) {
+          } else if ("messages" in result.res) {
             toast.error(result.res.messages[0]);
             console.log("data = ", result.res.messages);
           }

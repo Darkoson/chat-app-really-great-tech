@@ -1,7 +1,7 @@
 import { gql, useMutation } from "@apollo/client";
 import { GQLResult } from "../../interfaces";
 
-export const LOGOUT_MUTATION = gql`
+const LOGOUT_MUTATION = gql`
   mutation Logout {
     logout {
       ok
@@ -14,7 +14,7 @@ export const LOGOUT_MUTATION = gql`
   }
 `;
 
-const useLogout = () => {
+export const useRemoteLogout = () => {
   const [logout] = useMutation(LOGOUT_MUTATION);
 
   const executeLogout = async (): Promise<GQLResult | null> => {
@@ -24,5 +24,3 @@ const useLogout = () => {
 
   return { executeLogout };
 };
-
-export default useLogout;

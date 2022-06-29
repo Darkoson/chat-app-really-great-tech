@@ -1,16 +1,18 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "../../interfaces";
+import { User } from "../../../interfaces";
 import { AppState } from "../config";
 
 // Define a type for the slice state
 interface ContactsState {
   selectedId: number | null;
+  blockedIds: number[];
   entries: User[];
 }
-
+ 
 // Define the initial state
 const initialState: ContactsState = {
   selectedId: null,
+  blockedIds: [],
   entries: [],
 };
 
@@ -20,39 +22,34 @@ export const contactsSlice = createSlice({
   initialState,
 
   reducers: {
-    updateSelectedContactId: (state, action: PayloadAction<number>) => {
-      state.selectedId = action.payload;
+    updateSelectedContactId: (state, { payload }: PayloadAction<number>) => {
+      state.selectedId = payload;
     },
 
-    setContacts: (state, action: PayloadAction<User[]>) => {
-      const newEntities: any = [];
-      action.payload.forEach((contact: User) => {
-        newEntities[contact.id] = contact;
-      });
-      state.entries = newEntities;
-    },
-    addContact: (state, action: PayloadAction<User>) => {
-      state.entries[action.payload.id] = action.payload;
+    setContacts: (state, { payload }: PayloadAction<User[]>) => {
+      state.entries = payload;
     },
 
-    deleteContactById: (state, action: PayloadAction<number>) => {
-      delete state.entries[action.payload];
+    blockContact: (state, { payload }: PayloadAction<number>) => {
+      if (!state.blockedIds.includes(payload)) {
+        state.blockedIds.push(payload)
+      }
+    },
+    unblockContact: (state, { payload }: PayloadAction<number>) => {
+     state.blockedIds = state.blockedIds.filter((id) => id !== payload);
     },
   },
 });
 
-export const {
-  addContact,
-  setContacts,
-  deleteContactById,
-  updateSelectedContactId,
-} = contactsSlice.actions;
+export const { setContacts, updateSelectedContactId, blockContact , unblockContact } =
+  contactsSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 const contactState = (state: AppState) => state.contacts;
 
-export const selectContacts = createSelector(contactState, (state) =>
-  Object.values(state.entries)
+export const selectContacts = createSelector(
+  contactState,
+  (state) => state.entries
 );
 export const selectActiveContactId = createSelector(
   contactState,
@@ -61,11 +58,11 @@ export const selectActiveContactId = createSelector(
 
 export const selectActiveContact = createSelector(contactState, (state) => {
   let id = state.selectedId;
-  return id ? state.entries[id] : null;
+  return state.entries.find((contact) => contact.id === id);
 });
 
-export const selectContactById = (state: AppState, id: number) => {
-  return contactState(state).entries[id];
+export const selectBlockedIds = (state: AppState) => {
+  return contactState(state).blockedIds;
 };
 
 export default contactsSlice.reducer;

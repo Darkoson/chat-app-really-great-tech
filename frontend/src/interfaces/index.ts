@@ -10,8 +10,14 @@ export interface LoginInput {
 }
 
 export interface User extends RegistrationInput {
-  id: number; 
-  online?: boolean
+  id: number;
+  online?: boolean;
+}
+
+export interface BlockContactInput {
+  block: boolean;
+  blockerId: number;
+  victimId: number;
 }
 
 export interface Users {
@@ -23,7 +29,6 @@ export interface Info {
 export type Data = User | Users | Info;
 
 export interface GQLResult {
-  ok: true;
+  ok: boolean;
   res: Data;
 }
-

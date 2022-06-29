@@ -1,17 +1,5 @@
-// import { createAction, createReducer } from "@reduxjs/toolkit";
-// import { User } from "../../interfaces";
-
-// const login = createAction("LOGIN");
-// const logout = createAction("LOGOUT");
-// const fetchCurrentUser = createAction("CURRENT_USER_FETCH");
-// const updateCurrentUser = createAction<User[]>("CURRENT_USER_UPDATE");
-
-// export const userReducer = createReducer({}, (builder) => {
-//   builder.addCase(login, (state, action) => action.payload);
-// });
-
 import { createSlice, createSelector, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "../../interfaces";
+import { User } from "../../../interfaces";
 import { AppState } from "../config";
 
 export interface CurrentUser {
@@ -26,7 +14,7 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setCurrentUser(state, action: PayloadAction<User>) {
+    setCurrentUser(state, action: PayloadAction<User|null>) {
       state.current = action.payload;
     },
   },

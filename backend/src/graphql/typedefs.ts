@@ -15,13 +15,25 @@ export const typeDefs = gql`
     lastname: String!
   }
 
+  input BlockContactInput {
+    block: Boolean
+    blockerId: ID!
+    victimId: ID!
+  }
+
+  type LoginData {
+    currentUser: User
+    contacts: [User!]
+    blockedIds: [ID!]
+  }
+
   type User {
     id: ID!
     email: String!
     firstname: String!
     lastname: String!
-    password: String!
-    avatar: String!
+    password: String
+    avatar: String
     confirmed: Boolean!
   }
 
@@ -32,8 +44,8 @@ export const typeDefs = gql`
   type Users {
     users: [User!]
   }
- 
-  union Data = User | Users | Info
+
+  union Data = User | Users | Info | LoginData
 
   type GQLResult {
     ok: Boolean!
@@ -49,5 +61,6 @@ export const typeDefs = gql`
     login(input: LoginInput!): GQLResult
     logout: GQLResult
     register(input: RegisterInput!): GQLResult
+    blockContact(input: BlockContactInput!): GQLResult
   }
 `;

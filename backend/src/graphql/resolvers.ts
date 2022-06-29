@@ -1,7 +1,7 @@
 import { User } from "../models/user";
 import * as userService from "../services/user-service";
 import { GqlContext } from "./context";
-import { GQLResult, ILogin, IRegister } from "./interfaces";
+import { GQLResult, IBlockContact, ILogin, IRegister } from "./interfaces";
 
 // default initialization of the graphQl result
 const gqlResult: GQLResult = { ok: true, res: {} };
@@ -14,6 +14,9 @@ export const resolvers = {
       }
       if (obj.users) {
         return "Users";
+      }
+      if (obj.currentUser) {
+        return "LoginData";
       }
       return "User";
     },
@@ -97,6 +100,22 @@ export const resolvers = {
         gqlResult.ok = true;
         return gqlResult;
       } catch (ex) {
+        throw ex;
+      }
+    },
+
+    blockContact: async (
+      _: any,
+      args: { input: IBlockContact },
+      ctx: GqlContext
+    ): Promise<GQLResult> => {
+      try {
+        gqlResult.res = await userService.handleBlocking(args.input, ctx.req);
+        gqlResult.ok = !("messages" in gqlResult.res);
+        return gqlResult;
+        
+      } catch (ex) {
+        console.log(ex.message);
         throw ex;
       }
     },

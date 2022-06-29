@@ -2,15 +2,15 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./components/login/login";
 import Register from "./components/register/register";
-import useWindow from "./hooks/useWindow";
+// import useWindow from "./hooks/useWindow";
 import Chat from "./pages/chat/chat";
 import Welcome from "./pages/welcome/welcome";
 // import { Device } from "./store/actions/device-actions";
 
 function App() {
-  const { device } = useWindow();
+  // const { device } = useWindow();
 
-  console.log(device);
+  // console.log(device);
 
   return (
     <div>

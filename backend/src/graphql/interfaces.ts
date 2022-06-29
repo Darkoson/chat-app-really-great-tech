@@ -5,12 +5,23 @@ export interface ILogin {
   password: string;
 }
 
+export interface ILoginData {
+  currentUser: User;
+  contacts: User[];
+  blockedIds:string[]
+} 
+
 export interface IRegister extends ILogin {
   firstname: string;
   lastname: string;
   avatar?: string;
 }
 
+export interface IBlockContact {
+  block: boolean;
+  blockerId: string;
+  victimId: string;
+}
 export interface IUsers {
   users: Array<User>;
 }
@@ -23,4 +34,4 @@ export interface GQLResult {
   res: Data;
 }
 
-export type Data = User | IUsers | IInfo;
+export type Data = User | IUsers | IInfo | string[] | ILoginData;
