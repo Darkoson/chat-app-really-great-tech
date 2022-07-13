@@ -21,6 +21,12 @@ export const typeDefs = gql`
     victimId: ID!
   }
 
+  input SendMessageInput {
+    message: String!
+    senderId: String!
+    receiverId: String!
+  }
+
   type LoginData {
     currentUser: User
     contacts: [User!]
@@ -37,15 +43,27 @@ export const typeDefs = gql`
     confirmed: Boolean!
   }
 
+  type Chat {
+    id: ID!
+    message: String!
+    senderId: String!
+    receiverId: String!
+    created_at: Date
+  }
+
   type Info {
-    messages: [String!]
+    info: String!
   }
 
   type Users {
     users: [User!]
   }
 
-  union Data = User | Users | Info | LoginData
+  type Chats {
+    chats: [Chat!]
+  }
+
+  union Data = User | Chat | Users | Chats | Info | LoginData
 
   type GQLResult {
     ok: Boolean!
@@ -54,11 +72,13 @@ export const typeDefs = gql`
 
   type Query {
     me: GQLResult
+    getMessages(userId1: ID, userId2: ID): GQLResult
     getAllUserContacts(id: ID): GQLResult
   }
 
   type Mutation {
     login(input: LoginInput!): GQLResult
+    sendMessage(input: SendMessageInput!): GQLResult
     logout: GQLResult
     register(input: RegisterInput!): GQLResult
     blockContact(input: BlockContactInput!): GQLResult

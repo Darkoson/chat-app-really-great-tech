@@ -1,3 +1,4 @@
+import { Chat } from "../models/chat";
 import { User } from "../models/user";
 
 export interface ILogin {
@@ -8,8 +9,13 @@ export interface ILogin {
 export interface ILoginData {
   currentUser: User;
   contacts: User[];
-  blockedIds:string[]
-} 
+  blockedIds: string[];
+}
+export interface ISendMessage {
+  message: string;
+  senderId: string;
+  receiverId: string;
+}
 
 export interface IRegister extends ILogin {
   firstname: string;
@@ -25,8 +31,11 @@ export interface IBlockContact {
 export interface IUsers {
   users: Array<User>;
 }
+export interface IChats {
+  chats: Array<Chat>;
+}
 export interface IInfo {
-  messages?: Array<string>;
+  info: string;
 }
 
 export interface GQLResult {
@@ -34,4 +43,4 @@ export interface GQLResult {
   res: Data;
 }
 
-export type Data = User | IUsers | IInfo | string[] | ILoginData;
+export type Data = User | IChats | IUsers | IInfo | string[] | ILoginData;

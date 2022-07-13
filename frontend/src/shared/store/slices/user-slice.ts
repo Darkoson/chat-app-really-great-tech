@@ -14,7 +14,7 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setCurrentUser(state, action: PayloadAction<User|null>) {
+    setCurrentUser(state, action: PayloadAction<User | null>) {
       state.current = action.payload;
     },
   },

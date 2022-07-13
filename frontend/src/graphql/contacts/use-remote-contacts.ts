@@ -15,7 +15,7 @@ const MY_CONTACTS_QUERY = gql`
           }
         }
         ... on Info {
-          messages
+          info
         }
       }
     }
@@ -56,15 +56,12 @@ export const useRemoteContacts = () => {
     if (response.error) {
       return {
         ok: false,
-        res: { messages: [response.error.message] },
+        res: { info: response.error.message },
       };
     }
 
     let result: GQLResult = response.data.getAllUserContacts;
     return result;
-    // return result.data
-    //   ? result.data.getAllUserContacts
-    //   : { ok: false, res: result.error };
   };
 
   return { executeContacts };

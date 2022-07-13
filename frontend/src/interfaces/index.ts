@@ -9,6 +9,18 @@ export interface LoginInput {
   password: string;
 }
 
+export interface SendMessageInput {
+  message: string;
+  senderId: string;
+  receiverId: string;
+}
+
+export interface LoginData {
+  currentUser: User;
+  contacts: User[];
+  blockedIds: number[];
+}
+
 export interface User extends RegistrationInput {
   id: number;
   online?: boolean;
@@ -24,7 +36,7 @@ export interface Users {
   users: User[];
 }
 export interface Info {
-  messages: string[];
+  info: string;
 }
 export type Data = User | Users | Info;
 

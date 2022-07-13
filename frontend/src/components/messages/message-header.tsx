@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import { MoreOutlined } from "@ant-design/icons";
 import { Popover } from "antd";
-import { Link } from "react-router-dom";
 import { BlockContactInput, User } from "../../interfaces";
 import { useSelector } from "react-redux";
 import {
@@ -9,11 +8,10 @@ import {
   unblockContact,
   selectBlockedIds,
 } from "../../shared/store/slices/contacts-slice";
-import {
-  useRemoteContactBlocking,
-} from "../../graphql/contacts/use-remote-contact-blocking";
+import { useRemoteContactBlocking } from "../../graphql/contacts/use-remote-contact-blocking";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../shared/store/config";
+import styled from "styled-components";
 
 export interface MessageHeaderProps {
   currentUserId: number;
@@ -42,43 +40,63 @@ const MessageHeader: FC<MessageHeaderProps> = ({
         block
           ? dispatch(blockContact(contactId))
           : dispatch(unblockContact(contactId));
-      } else if ("messages" in result.res) {
-        console.log("Failed to handle blocking:", result.res.messages[0]);
+      } else if ("info" in result.res) {
+        console.log("Failed to handle blocking:", result.res.info);
       }
     });
   };
 
   return (
-    <div className="header message-header">
-      <h3 className="active-chat-username">
-        {currentContact.firstname + " " + currentContact.lastname}
-      </h3>
-      <div className="drop-down active-chat-options">
-        <Popover
-          placement="bottomRight"
-          content={
-            blockedContactIds.includes(currentContact.id) ? (
-              <span
-                onClick={() =>
-                  handleBlocking(false, currentUserId, currentContact.id)
-                }>
-                Unblock {currentContact.firstname}
-              </span>
-            ) : (
-              <span
-                onClick={() =>
-                  handleBlocking(true, currentUserId, currentContact.id)
-                }>
-                Block {currentContact.firstname}
-              </span>
-            )
-          }
-          trigger="click">
-          <MoreOutlined />
-        </Popover>
+    <Container className="header">
+      <div className="message-header">
+        <span className="active-chat-username">
+          {currentContact.firstname + " " + currentContact.lastname}
+        </span>
+        <div className="drop-down active-chat-options">
+          <Popover
+            placement="bottomRight"
+            content={
+              blockedContactIds.includes(currentContact.id) ? (
+                <span
+                  onClick={() =>
+                    handleBlocking(false, currentUserId, currentContact.id)
+                  }>
+                  Unblock {currentContact.firstname}
+                </span>
+              ) : (
+                <span
+                  onClick={() =>
+                    handleBlocking(true, currentUserId, currentContact.id)
+                  }>
+                  Block {currentContact.firstname}
+                </span>
+              )
+            }
+            trigger="click">
+            <MoreOutlined />
+          </Popover>
+        </div>
       </div>
-    </div>
+    </Container>
   );
 };
 
 export default MessageHeader;
+
+const Container = styled.div`
+  display: flex;
+  padding: 0px 30px;
+
+  align-items: center;
+  flex-direction: row;
+  border-radius: 0px 10px 0 0px;
+
+  .message-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    .active-chat-username {
+      color: white;
+    }
+  }
+`;

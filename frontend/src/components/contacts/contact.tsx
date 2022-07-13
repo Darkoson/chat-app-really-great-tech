@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import styled from "styled-components";
 import { User } from "../../interfaces";
 import { AppDispatch } from "../../shared/store/config";
 import {
@@ -21,7 +22,7 @@ const Contact: FC<ContactProps> = ({ person }) => {
   };
 
   return (
-    <div
+    <Container
       className={"contact " + (person.id === activeId ? "active-contact" : "")}
       onClick={() => handleClick(person.id)}>
       <div className="chat-user">
@@ -39,8 +40,69 @@ const Contact: FC<ContactProps> = ({ person }) => {
         </div>
       </div>
       <small className="state last-seen">1hr ago</small>
-    </div>
+    </Container>
   );
 };
 
 export default Contact;
+
+
+const Container = styled.div`
+  display: grid;
+  grid-template-columns: 75% 25%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-top: 0.2px solid var(--lightBlue);
+  transition: 0.5s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    background-color: var(--lightBlue);
+  }
+
+  .active-contact {
+    background-color: var(--lightBlue);
+  }
+
+  .chat-user {
+    display: flex;
+    align-items: center;
+  }
+
+  .chat-user img {
+    margin-right: 0.8rem;
+  }
+
+  .chat-name {
+    font-size: 0.8rem;
+  }
+
+  .chat-profile small {
+    font-size: 0.8rem;
+  }
+
+  .state {
+    width: 100%;
+    font-size: 0.8rem;
+  }
+
+  .online,
+  .typing {
+    color: var(--green);
+    font-weight: bold;
+  }
+
+  .last-seen {
+    color: var(--blue);
+  }
+
+  .blocked {
+    color: rgb(143, 143, 143);
+  }
+
+  .muted {
+    color: #2698fb6b;
+  }
+`;
+

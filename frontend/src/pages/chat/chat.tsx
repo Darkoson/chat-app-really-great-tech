@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from "react";
-import "./chat.css";
+// import "./chat.css";
 import UserHeader from "../../components/user/user-header";
 import ContactList from "../../components/contacts/contact-list";
 import Messages from "../../components/messages/messages";
@@ -14,13 +14,12 @@ import {
   selectCurrentUser,
   setCurrentUser,
 } from "../../shared/store/slices/user-slice";
- 
+import styled from "styled-components";
+
 const Chat: FC = () => {
   const navigate = useNavigate();
-
   const dispatch = useDispatch<AppDispatch>();
   const currentUser = useSelector(selectCurrentUser);
-  
 
   useEffect(() => {
     // console.log("chat: current user = ", currentUser);
@@ -35,23 +34,40 @@ const Chat: FC = () => {
     }
   }, [currentUser]);
 
- 
-
   return (
-    <section className="chat">
-      <div className="sidebar">
-        <div className="header sidebar-header">
-          <UserHeader />
-        </div>
-        <div className="sidebar-body">
-          <ContactList currentUserId={currentUser? currentUser.id:0} />
-        </div>
-      </div>
-      <div className="recipient">
-        <Messages />
-      </div>
-    </section>
+    <Container>
+      {currentUser && (
+        <section>
+          <div className="sidebar">
+            <UserHeader />
+            <ContactList currentUserId={currentUser.id} />
+          </div>
+          <div className="main-chat">
+          <Messages currentUser={currentUser} />
+          </div>
+        </section>
+      )}
+    </Container>
   );
 };
+
+const Container = styled.div`
+  section {
+    margin: 0px 20px;
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    height: 100vh;
+    .sidebar {
+      border: 0.1px solid blue;
+      border-radius: 10px 0px 0 0px;
+      height: 100vh;
+    }
+    .main-chat {
+      border: 0.1px solid blue;
+      border-radius: 0px 10px 0 0px;
+      height: 100vh;
+    }
+  }
+`;
 
 export default Chat;

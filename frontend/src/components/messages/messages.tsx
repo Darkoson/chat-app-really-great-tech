@@ -1,31 +1,50 @@
 import React, { FC } from "react";
 import { useSelector } from "react-redux";
+import styled from "styled-components";
+import { User } from "../../interfaces";
 import { selectActiveContact } from "../../shared/store/slices/contacts-slice";
-import { selectCurrentUser } from "../../shared/store/slices/user-slice";
 import MessageContent from "./message-content";
 import MessageHeader from "./message-header";
 import MessageInput from "./message-input";
-import "./messages.css";
+import MessageWelcome from "./message-welcome";
 
-const Messages: FC = () => {
-  const currentUser = useSelector(selectCurrentUser);
+interface MessagesProps {
+  currentUser: User;
+}
+const Messages: FC<MessagesProps> = ({ currentUser }) => {
   const activeContact = useSelector(selectActiveContact);
+
+  const sendMessage = async (input: string): Promise<String> => {
+    alert(input);
+    return "";
+  };
+
   return (
-    <div className="messages">
+    <Container>
       {currentUser && activeContact ? (
-        <div className="none">
+        <div className="messages">
           <MessageHeader
             currentUserId={currentUser.id}
             currentContact={activeContact}
           />
           <MessageContent />
-          <MessageInput />
+
+          <MessageInput handleSend={sendMessage} />
         </div>
       ) : (
-        " nothing to display"
+        <MessageWelcome firstname={currentUser.firstname} />
       )}
-    </div>
+    </Container>
   );
 };
 
 export default Messages;
+
+const Container = styled.div`
+  height: 100%;
+  .messages {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+`;

@@ -7,22 +7,10 @@
 }
 
 .contact-search .container {
-    position: relative;
+    
 }
 
-.search-input {
-    font-size: 1rem;
-    border-radius: 17px;
-    padding:1rem 1rem 1rem 3rem;
 
-}
-
-.search-icon {
-    position: absolute;
-    top: 50%;
-    left: 1.8rem;
-    transform: translateY(-50%);
-}
 
 
 /* Contact List Section */
@@ -39,7 +27,8 @@
     justify-content: space-between;
     align-items: center;
     padding: .5rem 0;
-    border-top: .2px solid var(--lightBlue);
+    border-top: .2px solid var(--lightBlue); 
+    transition: 0.5s ease-in-out;
 }
 .contact:hover {
     cursor: pointer;

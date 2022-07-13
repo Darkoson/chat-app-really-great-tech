@@ -1,20 +1,34 @@
 import { gql, useMutation } from "@apollo/client";
-import {  GQLResult, LoginInput } from "../../interfaces";
+import { GQLResult, LoginInput } from "../../interfaces";
 
- const LOGIN_MUTATION = gql`
+const LOGIN_MUTATION = gql`
   mutation Login($input: LoginInput!) {
     login(input: $input) {
       ok
       res {
-        ... on User {
-          id
-          email
-          firstname
-          lastname
-          password
+        ... on LoginData {
+          currentUser {
+            id
+            email
+            firstname
+            lastname
+            password
+            avatar
+            confirmed
+          }
+          contacts {
+            id
+            email
+            firstname
+            lastname
+            password
+            avatar
+            confirmed
+          }
+          blockedIds
         }
         ... on Info {
-          messages
+          info
         }
       }
     }
@@ -28,9 +42,12 @@ export const useRemoteLogin = () => {
     let result = await login({
       variables: { input },
     });
-    return result.data ? result.data.login : { ok: false, res: result.errors };
+
+    console.log("login input = ", input);
+    console.log("login data = ", result.data.login);
+    
+    return result.data ? result.data.login : { ok: false, res: result.errors};
   };
 
   return { executeLogin };
 };
- 

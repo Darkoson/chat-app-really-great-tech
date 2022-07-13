@@ -49,9 +49,9 @@ const Register: FC = () => {
             localStorage.setItem("user", JSON.stringify(result.res));
             // redirection to the chat page
             navigate("/chat");
-          } else if ("messages" in result.res) {
-            toast.error(result.res.messages[0]);
-            console.log("data = ", result.res.messages);
+          } else if ("info" in result.res) {
+            toast.error(result.res.info);
+            console.log("data = ", result.res.info);
           }
         })
         .catch((err) => toast.error("An expected error has happened"));

@@ -1,12 +1,17 @@
 import React, { FC } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {useRemoteLogin} from "../../graphql/user/use-remote-login";
+import { useRemoteLogin } from "../../graphql/user/use-remote-login";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import useForm from "../../shared/hooks/useForm";
 import { AppDispatch } from "../../shared/store/config";
 import { setCurrentUser } from "../../shared/store/slices/user-slice";
+import { LoginData } from "../../interfaces";
+import {
+  setBlockedIds,
+  setContacts,
+} from "../../shared/store/slices/contacts-slice";
 
 const Login: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -37,16 +42,24 @@ const Login: FC = () => {
         password: inputs.password,
       })
         .then((result) => {
-          if (result?.ok && "id" in result.res) {
-            console.log("before dispatch: currentUser=", result.res);
+          if (result.ok && "currentUser" in result.res) {
+            let data: LoginData = result.res;
 
-            dispatch(setCurrentUser(result.res));
-            localStorage.setItem("user", JSON.stringify(result.res));
+            dispatch(setCurrentUser(data.currentUser));
+            localStorage.setItem("user", JSON.stringify(data.currentUser));
+
+            dispatch(setContacts(data.contacts));
+            localStorage.setItem("contacts", JSON.stringify(data.contacts));
+
+            dispatch(setBlockedIds(data.blockedIds));
+            localStorage.setItem("blockedIds", JSON.stringify(data.blockedIds));
+
             // redirection to the chat page
             navigate("/chat");
-          } else if (result && "messages" in result.res) {
-            toast.error(result.res.messages[0]);
-            console.log("data = ", result.res.messages);
+          } else if (result && "info" in result.res) {
+            toast.error(result.res.info);
+            console.log("result = ", result);
+            console.log("data = ", result.res.info);
           }
         })
         .catch((err) => toast.error("An expected error has happened"));

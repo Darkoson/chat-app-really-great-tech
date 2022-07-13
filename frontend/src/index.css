@@ -1,9 +1,9 @@
 :root{
 
-      --blue: #2699FB;
-      --lightBlue: #F1F9FF;
-      --green: #1BFE1B;
-      --borderColor: #C0E2fd;
+  --blue: #2699FB;
+  --lightBlue: #F1F9FF;
+  --green: #1BFE1B;
+  --borderColor: #C0E2fd;
 
   --white:#FFFFFF;
   --gray:#707070;
@@ -42,12 +42,20 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-button {
+.header {
+  background-color: var(--blue);
+  color: white;
+  width: 100%;
+  height: 60px;
+  margin: auto;
+}
+
+/* button {
   outline: none;
   border: none;
   background-color: transparent;
   cursor: pointer;
-}
+} */
 
 
 
@@ -60,61 +68,61 @@ h3,p,small {
   color: var(--blue);
 }
 
-h1 {
+/* h1 {
   font-size: 1.5rem;
 }
 
 h2 {
   font-size: 1rem;
-}
+} */
 
 
-input {
+/* input {
   display: block;
   width: 100%;
   color: var(--blue);
   background-color: var(--lightBlue);
   border: 1px solid var(--borderColor);
   outline: none;
-}
+} */
 
 input::placeholder {
   color: var(--blue);
 }
 
-input:focus {
+/* input:focus {
   border: 1.5px solid var(--blue);
   transition: border .5s;
-}
+} */
 
 /* .container {
   padding: .2rem 1rem;
 }
   */
-.more-content button {
+/* .more-content button {
   display: flex;
   align-items: center;
   padding: .9rem .5rem;
-}
+} */
 
-.more-content button:hover {
+/* .more-content button:hover {
   background-color: var(--lightBlue);
-}
+} */
 
-.more-content svg,
+/* .more-content svg,
 .more-content span {
   vertical-align: middle;
-}
+} */
 
-.icon {
+/* .icon {
   fill: var(--blue);
-}
+} */
 
-.more-content button span {
+/* .more-content button span {
   margin-left: .5rem;
   font-size: .8rem;
   color: var(--blue)
-}
+} */
 
 
 
@@ -141,7 +149,8 @@ input:focus {
 
 
 /* Login & Register components */
-.Login, .Register {
+
+/* .Login, .Register {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -191,4 +200,4 @@ cursor: pointer;
 .text-white{ color: var(--white);}
 .text-blue-deep{ color: var(--blue-deep);}
 .text-blue-light{ color: var(--blue-light);}
-.text-blue-white{ color: var(--blue-white);}
+.text-blue-white{ color: var(--blue-white);} */

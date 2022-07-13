@@ -36,7 +36,7 @@ export const useRemoteContactBlocking = () => {
       variables: { input },
     });
     if (result.errors) {
-      return { ok: false, res: { messages: ["some errors has happened"] } };
+      return { ok: false, res: { info: "some errors has happened" } };
     }
     return result.data.blockContact;
   };

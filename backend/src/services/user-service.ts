@@ -22,7 +22,7 @@ const saltRounds = 10;
 
 export const getUser = async (id: any): Promise<User | IInfo> => {
   let user = await User.findOneBy({ id });
-  return user ? user : { messages: ["user does not exist !"] };
+  return user ? user : { info: "user does not exist." };
 };
 
 export const getUserContacts = async (id: any): Promise<IUsers> => {
@@ -53,19 +53,16 @@ export const login = async (
     const user = await User.findOneBy({ email });
 
     if (!user) {
-      return { messages: ["Wrong Email."] };
+      return { info: "Email does not exist." };
     }
 
     if (!user.confirmed) {
-      return {
-        messages: ["User's registration email yet is not yet confirmed."],
-      };
+      return { info: "User's registration email yet is not yet confirmed." };
     }
     const passwordMatch = await bcrypt.compare(password, user?.password);
+
     if (!passwordMatch) {
-      return {
-        messages: ["Wrong Password."],
-      };
+      return { info: "Password is incorrect." };
     }
 
     if (!req.session.userId) {
@@ -82,13 +79,9 @@ export const login = async (
       blockedIds: await getBlockedIds(user.id),
     };
   } catch (error) {
-    console.log("server error: ", error);
-
-    return {
-      messages: [
-        "The server is temporarly unavailable, pleaes try again later",
-      ],
-    };
+    console.log("Server error: ", error);
+    const errorMessage = "Server error: " +error;
+    return { info: errorMessage };
   }
 };
 
@@ -102,21 +95,19 @@ export const register = async (
   const trimmedEmail = input.email.trim().toLowerCase();
   const emailErrorMsg = isEmailValid(trimmedEmail);
   if (emailErrorMsg) {
-    return {
-      messages: [emailErrorMsg],
-    };
+    return { info: emailErrorMsg };
   }
 
   //checking if the password is valid
   if (!pwdResult.isValid) {
-    return { messages: [pwdResult.message] };
+    return { info: pwdResult.message };
   }
 
   try {
     //checking if the email does not exist already
     let existingUser = await User.findOneBy({ email: input.email });
     if (existingUser) {
-      return { messages: ["Email already in use"] };
+      return { info: "Email already in use" };
     }
 
     const salt = await bcrypt.genSalt(saltRounds);
@@ -134,11 +125,7 @@ export const register = async (
     return user;
   } catch (err) {
     console.log(err);
-    return {
-      messages: [
-        "The server is temporarly unavailable, pleaes try again later",
-      ],
-    };
+    return { info: "Server couldn't respond!" };
   }
 };
 
@@ -155,7 +142,7 @@ export const handleBlocking = async (
       relations: ["victims"],
     });
     if (!blocker) {
-      return { messages: ["The blocker does not exist !"] };
+      return { info: "The blocker does not exist !" };
     }
 
     let victim = await repo.findOne({
@@ -163,7 +150,7 @@ export const handleBlocking = async (
       relations: ["blockers"],
     });
     if (!victim) {
-      return { messages: ["The victim does not exist !"] };
+      return { info: "The victim does not exist !" };
     }
 
     if (input.block) {
@@ -179,9 +166,7 @@ export const handleBlocking = async (
     return blocker.victims.map((contact) => contact.id);
   } catch (err) {
     console.log(err);
-    return {
-      messages: [err.message],
-    };
+    return { info: "The server couldn't respond !" };
   }
 };
 

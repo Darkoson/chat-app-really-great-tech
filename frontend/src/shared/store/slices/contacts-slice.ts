@@ -8,7 +8,7 @@ interface ContactsState {
   blockedIds: number[];
   entries: User[];
 }
- 
+
 // Define the initial state
 const initialState: ContactsState = {
   selectedId: null,
@@ -30,19 +30,28 @@ export const contactsSlice = createSlice({
       state.entries = payload;
     },
 
+    setBlockedIds: (state, { payload }: PayloadAction<number[]>) => {
+      state.blockedIds = payload;
+    },
+
     blockContact: (state, { payload }: PayloadAction<number>) => {
       if (!state.blockedIds.includes(payload)) {
-        state.blockedIds.push(payload)
+        state.blockedIds.push(payload);
       }
     },
     unblockContact: (state, { payload }: PayloadAction<number>) => {
-     state.blockedIds = state.blockedIds.filter((id) => id !== payload);
+      state.blockedIds = state.blockedIds.filter((id) => id !== payload);
     },
   },
 });
 
-export const { setContacts, updateSelectedContactId, blockContact , unblockContact } =
-  contactsSlice.actions;
+export const {
+  setContacts,
+  updateSelectedContactId,
+  blockContact,
+  unblockContact,
+  setBlockedIds,
+} = contactsSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 const contactState = (state: AppState) => state.contacts;
@@ -66,17 +75,3 @@ export const selectBlockedIds = (state: AppState) => {
 };
 
 export default contactsSlice.reducer;
-
-// import { createAction, createReducer } from "@reduxjs/toolkit";
-// import { User, Users } from "../../interfaces";
-
-// const selectedContact = createAction<User>("CONTACT_SELECTED");
-// const updateContactList = createAction<User[]>("CONTACT_LIST_UPDATE");
-
-// export const selectedContactReducer = createReducer({}, (builder) => {
-//   builder.addCase(selectedContact, (state, action) => action.payload);
-// });
-
-// export const contactsReducer = createReducer({}, (builder) => {
-//   builder.addCase(updateContactList, (state, action) => action.payload);
-// });
