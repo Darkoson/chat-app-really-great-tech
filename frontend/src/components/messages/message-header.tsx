@@ -84,6 +84,7 @@ const MessageHeader: FC<MessageHeaderProps> = ({
 export default MessageHeader;
 
 const Container = styled.div`
+  margin: 0px;
   display: flex;
   padding: 0px 30px;
 

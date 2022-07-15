@@ -11,8 +11,8 @@ export interface LoginInput {
 
 export interface SendMessageInput {
   message: string;
-  senderId: string;
-  receiverId: string;
+  senderId: number;
+  receiverId: number;
 }
 
 export interface LoginData {
@@ -26,6 +26,11 @@ export interface User extends RegistrationInput {
   online?: boolean;
 }
 
+export interface Chat extends SendMessageInput {
+  id: number;
+  created_at: Date;
+}
+
 export interface BlockContactInput {
   block: boolean;
   blockerId: number;
@@ -35,10 +40,13 @@ export interface BlockContactInput {
 export interface Users {
   users: User[];
 }
+export interface Chats {
+  chats: Chat[];
+}
 export interface Info {
   info: string;
 }
-export type Data = User | Users | Info;
+export type Data = User | Users | Chats | Info;
 
 export interface GQLResult {
   ok: boolean;

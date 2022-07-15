@@ -54,7 +54,6 @@ const Container = styled.div`
   align-items: center;
   padding: 0.5rem 0;
   border-top: 0.2px solid var(--lightBlue);
-  transition: 0.5s ease-in-out;
 
   &:hover {
     cursor: pointer;
@@ -63,6 +62,7 @@ const Container = styled.div`
 
   .active-contact {
     background-color: var(--lightBlue);
+    transition: 0.5s ease-in-out;
   }
 
   .chat-user {

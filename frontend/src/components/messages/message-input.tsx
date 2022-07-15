@@ -6,7 +6,7 @@ import styled from "styled-components";
 import Picker from "emoji-picker-react";
 
 interface MessageInputProps {
-  handleSend: (input: string) => Promise<String>;
+  handleSend: (input: string) => Promise<void>;
 }
 const MessageInput: FC<MessageInputProps> = ({ handleSend }) => {
   const [msg, setMsg] = useState("");

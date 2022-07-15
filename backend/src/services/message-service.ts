@@ -23,10 +23,10 @@ export const getMessages = async (
         { senderId: userId1, receiverId: userId2 },
         { senderId: userId2, receiverId: userId1 },
       ],
-      order: { created_at: "DESC" },
+      order: { created_at: "ASC" },
     });
 
-    result.res = {chats};
+    result.res = { chats };
     return result;
   } catch (error) {
     result.ok = false;

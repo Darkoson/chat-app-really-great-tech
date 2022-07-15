@@ -72,9 +72,6 @@ export const resolvers = {
       try {
         gqlResult.ok = true;
         gqlResult.res = await userService.getUserContacts(args.id);
-        console.log("args=", args);
-        console.log("res=", gqlResult.res);
-
         return gqlResult;
       } catch (ex) {
         throw ex;
@@ -120,8 +117,6 @@ export const resolvers = {
       ctx: GqlContext
     ): Promise<GQLResult> => {
       try {
-        console.log("args=", args);
-
         return await messageService.sendMessage(args.input);
       } catch (ex) {
         console.log(ex.message);

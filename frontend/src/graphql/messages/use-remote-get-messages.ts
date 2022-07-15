@@ -2,8 +2,8 @@ import { gql, useLazyQuery } from "@apollo/client";
 import { GQLResult } from "../../interfaces";
 
 const GET_MESSAGES = gql`
-  query GetMessages($user1: ID, $user2: ID) {
-    getMessages(user1: $user1, user2: $user2) {
+  query GetMessages($userId1: ID, $userId2: ID) {
+    getMessages(userId1: $userId1, userId2: $userId2) {
       ok
       res {
         ... on Chats {
@@ -29,8 +29,8 @@ export const useRemoteGetMessages = () => {
   });
 
   const executeGetMessages = async (
-    userId1: string,
-    userId2: string
+    userId1: number,
+    userId2: number
   ): Promise<GQLResult> => {
     let response = await execGetMessages({
       variables: { userId1, userId2 },

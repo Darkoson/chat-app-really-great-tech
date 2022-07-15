@@ -1,33 +1,79 @@
-import React, { FC } from "react";
-import { useSelector } from "react-redux";
+import React, { FC, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { User } from "../../interfaces";
-import { selectActiveContact } from "../../shared/store/slices/contacts-slice";
+import { io, Socket } from "socket.io-client";
+
+import { useRemoteSendMessage } from "../../graphql/messages/use-remote-send-message";
+import { Chat, User } from "../../interfaces";
 import MessageContent from "./message-content";
 import MessageHeader from "./message-header";
 import MessageInput from "./message-input";
 import MessageWelcome from "./message-welcome";
+import { useRemoteGetMessages } from "../../graphql/messages/use-remote-get-messages";
 
 interface MessagesProps {
   currentUser: User;
+  currentContact: User | undefined;
 }
-const Messages: FC<MessagesProps> = ({ currentUser }) => {
-  const activeContact = useSelector(selectActiveContact);
 
-  const sendMessage = async (input: string): Promise<String> => {
-    alert(input);
-    return "";
+const host = "http://localhost:4000";
+
+const Messages: FC<MessagesProps> = ({ currentUser, currentContact }) => {
+  const socket = useRef<Socket>();
+  const { executeSendMessage } = useRemoteSendMessage();
+
+  const { executeGetMessages } = useRemoteGetMessages();
+  const [incomingMessage, setIncomingMessage] = useState<Chat>();
+  const [chats, setChats] = useState<Chat[]>([]);
+
+  useEffect(() => {
+    socket.current = io(host);
+    socket.current.emit("add-user", currentUser.id);
+  }, [currentUser]);
+
+  const sendMessage = async (message: string): Promise<void> => {
+    let chat: Chat = {
+      id: 0,
+      created_at: new Date(),
+      message,
+      senderId: currentUser.id,
+      receiverId: currentContact ? currentContact.id : 0,
+    };
+    executeSendMessage(chat);
+    socket.current?.emit("send-message", chat);
+    setChats([...chats, chat]);
   };
+
+  useEffect(() => {
+    if (currentContact) {
+      executeGetMessages(currentUser.id, currentContact.id).then((data) => {
+        if (data.ok && "chats" in data.res) {
+          setChats(data.res.chats);
+        }
+      });
+    }
+  }, [currentContact]);
+
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on("receive-message", (incoming: Chat) => {
+        setIncomingMessage(incoming);
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    incomingMessage && setChats((prev) => [...prev, incomingMessage]);
+  }, [incomingMessage]);
 
   return (
     <Container>
-      {currentUser && activeContact ? (
+      {currentContact ? (
         <div className="messages">
           <MessageHeader
             currentUserId={currentUser.id}
-            currentContact={activeContact}
+            currentContact={currentContact}
           />
-          <MessageContent />
+          <MessageContent currentUserId={currentUser.id} chats={chats} />
 
           <MessageInput handleSend={sendMessage} />
         </div>

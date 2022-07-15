@@ -15,14 +15,16 @@ import {
   setCurrentUser,
 } from "../../shared/store/slices/user-slice";
 import styled from "styled-components";
+import { selectActiveContact } from "../../shared/store/slices/contacts-slice";
 
 const Chat: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+
   const currentUser = useSelector(selectCurrentUser);
+  const currentContact = useSelector(selectActiveContact);
 
   useEffect(() => {
-    // console.log("chat: current user = ", currentUser);
     if (!currentUser) {
       let jsonUser = localStorage.getItem("user");
       if (jsonUser) {
@@ -43,7 +45,11 @@ const Chat: FC = () => {
             <ContactList currentUserId={currentUser.id} />
           </div>
           <div className="main-chat">
-          <Messages currentUser={currentUser} />
+            <Messages
+              currentUser={currentUser}
+              currentContact={currentContact}
+            />
+            
           </div>
         </section>
       )}
