@@ -12,7 +12,7 @@ import {
   setBlockedIds,
   setContacts,
 } from "../../shared/store/slices/contacts-slice";
-
+import styled from "styled-components";
 const Login: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { executeLogin } = useRemoteLogin();
@@ -67,51 +67,82 @@ const Login: FC = () => {
   };
 
   return (
-    <div className="Login">
+    <Container>
       <div className="title">Login</div>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <input
-            type="email"
-            name="email"
-            onChange={handleInputChange}
-            placeholder="example@email.com"
-          />
-        </div>
+        <input
+          type="email"
+          name="email"
+          onChange={handleInputChange}
+          placeholder="example@email.com"
+        />
 
-        <div className="form-group">
-          <input
-            type="password"
-            name="password"
-            placeholder="****"
-            onChange={handleInputChange}
-          />
-        </div>
+        <input
+          type="password"
+          name="password"
+          placeholder="****"
+          onChange={handleInputChange}
+        />
 
-        <div className="form-group">
-          <button id="btn-login" className="text-bold text-white">
-            Connect
-          </button>
-        </div>
+        <button id="btn-login">Connect</button>
 
-        <Link to="/signup" className="text-small text-bold text-white">
+        <Link to="/register" className="text-small text-bold text-white">
           Have no account ?{" "}
           <span className=" text-blue-deep"> click here to register</span>
         </Link>
       </form>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-    </div>
+
+      <div className="Login">
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+      </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 2em;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1em;
+    input {
+      border-radius: 3px;
+      border: none;
+      padding: 8px;
+    }
+
+    #btn-login {
+      width: 100%;
+      background-color: var(--blue-deep);
+      border-radius: 3px;
+      padding: 8px;
+      color: white;
+      border: none;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    a {
+      font-size: 12px;
+      text-decoration: none;
+    }
+  }
+`;
 
 export default Login;

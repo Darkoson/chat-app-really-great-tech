@@ -1,7 +1,7 @@
 import { gql, useMutation } from "@apollo/client";
 import { GQLResult, RegistrationInput } from "../../interfaces";
 
- const REGISTER_MUTATION = gql`
+const REGISTER_MUTATION = gql`
   mutation Register($input: RegisterInput!) {
     register(input: $input) {
       ok
@@ -14,7 +14,7 @@ import { GQLResult, RegistrationInput } from "../../interfaces";
           password
         }
         ... on Info {
-          messages
+          info
         }
       }
     }
@@ -30,7 +30,9 @@ export const useRemoteRegistration = () => {
     let result = await register({
       variables: { input },
     });
-    return result.data ? result.data.register : { ok: false, res: result.errors};
+    return result.data
+      ? result.data.register
+      : { ok: false, res: result.errors };
   };
 
   return { executeRegistration };

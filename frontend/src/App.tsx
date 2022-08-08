@@ -1,17 +1,11 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./components/login/login";
-import Register from "./components/register/register";
-// import useWindow from "./hooks/useWindow";
-import Chat from "./pages/chat/chat";
-import Welcome from "./pages/welcome/welcome";
-// import { Device } from "./store/actions/device-actions";
+import Login from "./components/auth/login";
+import Register from "./components/auth/register";
+import Chat from "./pages/chat";
+import Welcome from "./pages/welcome";
 
 function App() {
-  // const { device } = useWindow();
-
-  // console.log(device);
-
   return (
     <div>
       <BrowserRouter>
@@ -22,7 +16,6 @@ function App() {
             <Route path="register" element={<Register />} />
           </Route>
           <Route path="chat" element={<Chat />} />
-          {/* {device !== Device.Desktop} */}
         </Routes>
       </BrowserRouter>
     </div>

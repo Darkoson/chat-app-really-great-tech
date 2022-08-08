@@ -4,6 +4,7 @@ import { useRemoteRegistration } from "../../graphql/user/use-remote-registratio
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import useForm from "../../shared/hooks/useForm";
+import styled from "styled-components";
 
 const Register: FC = () => {
   const { executeRegistration } = useRemoteRegistration();
@@ -48,7 +49,7 @@ const Register: FC = () => {
           if (result.ok) {
             localStorage.setItem("user", JSON.stringify(result.res));
             // redirection to the chat page
-            navigate("/chat");
+            navigate("/login");
           } else if ("info" in result.res) {
             toast.error(result.res.info);
             console.log("data = ", result.res.info);
@@ -59,60 +60,51 @@ const Register: FC = () => {
   };
 
   return (
-    <div className="Register">
-      <div className="title">SignUp</div>
+    <Container>
+      <div className="title">Register</div>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <input
-            type="email"
-            name="email"
-            onChange={handleInputChange}
-            placeholder="example@email.com"
-          />
-        </div>
+        <input
+          type="email"
+          name="email"
+          onChange={handleInputChange}
+          placeholder="your email address"
+        />
 
-        <div className="form-group">
-          <input
-            type="password"
-            name="password"
-            placeholder="****"
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="form-group">
-          <input
-            type="password"
-            name="confirm"
-            placeholder="****"
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="form-group">
-          <input
-            type="text"
-            name="firstname"
-            placeholder="first name"
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="form-group">
-          <input
-            type="text"
-            name="lastname"
-            placeholder="last name"
-            onChange={handleInputChange}
-          />
-        </div>
+        <input
+          type="password"
+          name="password"
+          placeholder="your password"
+          onChange={handleInputChange}
+        />
 
-        <div className="form-group">
-          <button id="btn-login" className="text-bold text-white">
-            Connect
-          </button>
-        </div>
+        <input
+          type="password"
+          name="confirm"
+          placeholder="confirm password"
+          onChange={handleInputChange}
+        />
 
-        <Link to="/signin" className="text-small text-bold text-white">
-          Have an account ?{" "}
-          <span className=" text-blue-deep"> click here to signin</span>
+        <input
+          type="text"
+          name="firstname"
+          placeholder="first name"
+          onChange={handleInputChange}
+        />
+
+        <input
+          type="text"
+          name="lastname"
+          placeholder="last name"
+          onChange={handleInputChange}
+        />
+
+        <button id="btn-login" className="text-bold text-white">
+          Connect
+        </button>
+
+        <Link to="/login">
+          Already have an account ?{" "}
+          <span className=" text-blue-deep"> click here to login</span>
         </Link>
       </form>
       <ToastContainer
@@ -126,8 +118,44 @@ const Register: FC = () => {
         draggable
         pauseOnHover
       />
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 2em;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1em;
+    input {
+      border-radius: 3px;
+      border: none;
+      padding: 8px;
+    }
+
+    #btn-login {
+      width: 100%;
+      background-color: var(--blue-deep);
+      border-radius: 3px;
+      padding: 8px;
+      color: white;
+      border: none;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    a {
+      font-size: 12px;
+      text-decoration: none;
+    }
+  }
+`;
 
 export default Register;

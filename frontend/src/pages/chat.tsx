@@ -1,21 +1,20 @@
 import React, { FC, useEffect } from "react";
-// import "./chat.css";
-import UserHeader from "../../components/user/user-header";
-import ContactList from "../../components/contacts/contact-list";
-import Messages from "../../components/messages/messages";
-
-import { User } from "../../interfaces";
-
+import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../shared/store/config";
+
+import UserHeader from "../components/user/user-header";
+import ContactList from "../components/contacts/contact-list";
+import Messages from "../components/messages/messages";
+import { User } from "../interfaces";
+
+import { AppDispatch } from "../shared/store/config";
 import {
   selectCurrentUser,
   setCurrentUser,
-} from "../../shared/store/slices/user-slice";
-import styled from "styled-components";
-import { selectActiveContact } from "../../shared/store/slices/contacts-slice";
+} from "../shared/store/slices/user-slice";
+import { selectActiveContact } from "../shared/store/slices/contacts-slice";
 
 const Chat: FC = () => {
   const navigate = useNavigate();
@@ -49,7 +48,6 @@ const Chat: FC = () => {
               currentUser={currentUser}
               currentContact={currentContact}
             />
-            
           </div>
         </section>
       )}
